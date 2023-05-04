@@ -1,0 +1,44 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "mvn -Drevision=${nextRelease.version} clean package"
+      }
+    ],
+    [
+      "@codedependant/semantic-release-docker",
+      {
+        "dockerTags": [
+          "{{#if prerelease.[0]}}{{prerelease.[0]}}{{else}}latest{{/if}}",
+          "{{major}}-{{#if prerelease.[0]}}{{prerelease.[0]}}{{else}}latest{{/if}}",
+          "{{major}}.{{minor}}-{{#if prerelease.[0]}}{{prerelease.[0]}}{{else}}latest{{/if}}",
+          "{{version}}"
+        ],
+        "dockerRegistry": "<DOCKER_REGISTRY>",
+        "dockerProject": "<DOCKER_PROJECT> or null",
+        "dockerArgs": {
+          "VERSION": "{{next.version}}"
+        },
+        "dockerImage": "<YOUR_APP_NAME>"
+      }
+    ],
+    "@semantic-release/git",
+    [
+      "@argo/sematic-release-teams",
+      {
+        "packageName": "<YOUR_APP_NAME>"
+      }
+    ]
+  ]
+}
