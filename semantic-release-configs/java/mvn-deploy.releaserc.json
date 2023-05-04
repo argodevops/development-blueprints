@@ -1,0 +1,27 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "mvn -Drevision=${nextRelease.version} deploy"
+      }
+    ],
+    "@semantic-release/git",
+    [
+      "@argo/sematic-release-teams",
+      {
+        "packageName": "<YOUR_APP_NAME>"
+      }
+    ]
+  ]
+}
