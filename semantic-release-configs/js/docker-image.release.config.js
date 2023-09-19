@@ -29,7 +29,7 @@ const docker = [
 
 const git = "@semantic-release/git";
 
-const teams = ["@argo/sematic-release-teams", { packageName: pkg.name }];
+const teams = ["@argodevops/semantic-release-teams", { packageName: pkg.name }];
 
 module.exports = {
   branches,
